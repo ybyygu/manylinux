@@ -18,7 +18,7 @@ COPY ./tmux-3.1b /usr/bin/tmux
 COPY ./realpath /usr/bin/realpath
 
 # the default is the shipped python2
-RUN echo "export PATH=/opt/python/cp39-cp39/bin/:${PATH}" >> /etc/profile.d/python39.sh
+RUN echo "export PATH=/opt/python/cp39-cp39/bin/:${PATH}" >> /etc/profile.d/python.sh
 # vim is perfect
 RUN echo "vi='vim'" >> ~/.bashrc
 

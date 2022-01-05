@@ -1,0 +1,17 @@
+FROM gwp/manylinux2010
+
+MAINTAINER Wenping Guo (ybyygu@gmail.com)
+
+# for running vasp in current host account
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+ARG USER_NAME=ybyygu
+
+RUN yum install -y hdf5 freetype freetype-devel pkgconfig libpng-devel libjpeg-devel
+RUN groupadd -g ${GROUP_ID} ybyygu
+RUN useradd -l -u ${USER_ID} --no-create-home --home-dir=/share/apps/home -g ybyygu ybyygu
+
+USER ybyygu
+WORKDIR /share/apps/home
+
+CMD ["/bin/bash"]

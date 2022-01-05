@@ -1,0 +1,29 @@
+# [[file:manylinux.note::6c7ad4db][6c7ad4db]]
+FROM quay.io/pypa/manylinux2014_x86_64
+
+MAINTAINER Wenping Guo (ybyygu@gmail.com)
+
+# 2010, centos6 需要
+# COPY fix-yum.sh /root/
+# RUN bash -x /root/fix-yum.sh
+
+# install scp
+RUN yum update -y
+RUN yum install -y openssh-clients wget
+RUN yum clean all
+
+# install tmux for interactive compiling
+COPY ./tmux-3.1b /usr/bin/tmux
+
+# 默认使用 manylinux 中的 Python, 而非 CentOS 自带的
+RUN echo "export PATH=/opt/python/cp39-cp39/bin/:${PATH}" >> /etc/profile.d/python39.sh
+
+# manylinux 自带的是 3.22 版, 在 /usr/local 下
+# WORKDIR /tmp
+# COPY cmake-3*z .
+# COPY install-cmake.sh .
+# RUN bash -x install-cmake.sh
+
+# 强制用 login shell, 不然 profile.d 下的脚本可能不读
+CMD ["bash", "--login"]
+# 6c7ad4db ends here
